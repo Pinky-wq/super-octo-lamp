@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Product Search</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <!-- UI for search criteria -->
+            <label>Product Name:</label>
+            <asp:TextBox ID="txtProductName" runat="server"></asp:TextBox>
+            
+            <!-- Add UI for other search criteria fields -->
+
+            <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" />
+            <asp:Button ID="btnClear" runat="server" Text="Clear" OnClick="btnClear_Click" />
+
+            <!-- Display search results in a GridView -->
+            <asp:GridView ID="gvSearchResults" runat="server" AutoGenerateColumns="true"></asp:GridView>
+        </div>
+    </form>
+</body>
+</html>
