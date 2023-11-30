@@ -1,0 +1,63 @@
+using System;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace YourNamespace
+{
+    public partial class Search : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            // Initialize the GridView on page load if needed
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            // Retrieve search criteria from UI
+            string productName = txtProductName.Text.Trim();
+            // Retrieve other search criteria fields
+
+            // Perform search using stored procedure
+            DataTable dt = SearchProducts(productName /*, other parameters */);
+
+            // Bind the search results to GridView
+            gvSearchResults.DataSource = dt;
+            gvSearchResults.DataBind();
+        }
+
+        protected void btnClear_Click(object sender, EventArgs e)
+        {
+            // Clear search criteria fields
+            txtProductName.Text = string.Empty;
+            // Clear other search criteria fields
+
+            // Clear GridView
+            gvSearchResults.DataSource = null;
+            gvSearchResults.DataBind();
+        }
+
+        private DataTable SearchProducts(string productName /*, other parameters */)
+        {
+            // Call stored procedure to perform search
+            using (SqlConnection connection = new SqlConnection("YourConnectionString"))
+            {
+                using (SqlCommand command = new SqlCommand("usp_SearchProducts", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters
+                    command.Parameters.AddWithValue("@ProductName", productName);
+                    // Add other parameters
+
+                    // Open connection and execute query
+                    connection.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    return dt;
+                }
+            }
+        }
+    }
+}
